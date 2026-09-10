@@ -1,0 +1,166 @@
+{
+  "round": "round-001",
+  "project": "Eleven-Realms",
+  "parallelisable": true,
+  "summary": {
+    "mission_count": 11,
+    "collision_count": 0,
+    "unimplemented_dependency_count": 0,
+    "baseline_commit_green": true,
+    "dispatch_ready_from_project_side": true
+  },
+  "missions": [
+    {
+      "id": "ER-001",
+      "title": "Core contracts",
+      "owned_paths": ["src/core"],
+      "readable_paths": ["src"],
+      "forbidden_paths": ["src/main.ts"],
+      "dependencies": [],
+      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts", "src/core/rng.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    },
+    {
+      "id": "ER-002",
+      "title": "World grid",
+      "owned_paths": ["src/game"],
+      "readable_paths": ["src/core"],
+      "forbidden_paths": ["src/main.ts", "src/render"],
+      "dependencies": ["ER-001"],
+      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    },
+    {
+      "id": "ER-003",
+      "title": "Motion and interaction",
+      "owned_paths": ["src/game"],
+      "readable_paths": ["src/core"],
+      "forbidden_paths": ["src/main.ts", "src/render"],
+      "dependencies": ["ER-001", "ER-002"],
+      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    },
+    {
+      "id": "ER-004",
+      "title": "Canvas renderer",
+      "owned_paths": ["src/render"],
+      "readable_paths": ["src/core"],
+      "forbidden_paths": ["src/core/world.ts"],
+      "dependencies": ["ER-001"],
+      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    },
+    {
+      "id": "ER-005",
+      "title": "UI shell",
+      "owned_paths": ["src/ui"],
+      "readable_paths": ["src/core"],
+      "forbidden_paths": ["src/main.ts", "src/render"],
+      "dependencies": ["ER-001"],
+      "shared_interfaces": ["src/core/contracts.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    },
+    {
+      "id": "ER-006",
+      "title": "Mission graph",
+      "owned_paths": ["src/mission"],
+      "readable_paths": ["src/core"],
+      "forbidden_paths": ["src/main.ts"],
+      "dependencies": ["ER-001"],
+      "shared_interfaces": ["src/core/contracts.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    },
+    {
+      "id": "ER-007",
+      "title": "Artifact log",
+      "owned_paths": ["src/evidence"],
+      "readable_paths": ["src/core"],
+      "forbidden_paths": ["src/main.ts"],
+      "dependencies": ["ER-001"],
+      "shared_interfaces": ["src/core/contracts.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    },
+    {
+      "id": "ER-008",
+      "title": "Scheduler",
+      "owned_paths": ["src/control"],
+      "readable_paths": ["src/core"],
+      "forbidden_paths": ["src/main.ts"],
+      "dependencies": ["ER-001"],
+      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    },
+    {
+      "id": "ER-009",
+      "title": "Map compiler",
+      "owned_paths": ["src/compile"],
+      "readable_paths": ["src/core"],
+      "forbidden_paths": ["src/main.ts"],
+      "dependencies": ["ER-001", "ER-002"],
+      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    },
+    {
+      "id": "ER-010",
+      "title": "Network protocol",
+      "owned_paths": ["src/net"],
+      "readable_paths": ["src/core"],
+      "forbidden_paths": ["src/main.ts"],
+      "dependencies": ["ER-001"],
+      "shared_interfaces": ["src/core/contracts.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    },
+    {
+      "id": "ER-011",
+      "title": "CI gate",
+      "owned_paths": [".github/workflows"],
+      "readable_paths": ["missions"],
+      "forbidden_paths": ["src/main.ts"],
+      "dependencies": ["ER-001"],
+      "shared_interfaces": ["src/core/contracts.ts"],
+      "collision_with": [],
+      "depends_on_unimplemented_contract": false,
+      "baseline_from_main": true,
+      "acceptance_testable": true
+    }
+  ],
+  "architecture_changes": {
+    "src/core/contracts.ts": "stable shared contract surface",
+    "src/core/world.ts": "authoritative state transition contract",
+    "src/render/canvasRenderer.ts": "isolated renderer adapter",
+    "src/main.ts": "composition-only shell, no feature ownership"
+  },
+  "notes": [
+    "No two Round 001 missions have overlapping writable ownership paths in the baseline contract."
+  ]
+}
