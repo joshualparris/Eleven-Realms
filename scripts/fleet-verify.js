@@ -26,9 +26,9 @@ for (const check of checks) {
 
 const round = JSON.parse(fs.readFileSync(path.join(repoRoot, 'missions', 'round-001.json'), 'utf8'));
 const assignmentTemplate = JSON.parse(fs.readFileSync(path.join(repoRoot, 'missions', 'round-001-assignment-template.json'), 'utf8'));
-if (!Array.isArray(round.workers) || round.workers.length !== 11) {
+if (!Array.isArray(round.missions) || round.missions.length !== 11) {
   failures += 1;
-  console.error('fleet:verify failure: round-001 must contain exactly 11 workers');
+  console.error('fleet:verify failure: round-001 must contain exactly 11 missions');
 }
 if (!assignmentTemplate.assignment_template.mapping || Object.keys(assignmentTemplate.assignment_template.mapping).length !== 11) {
   failures += 1;

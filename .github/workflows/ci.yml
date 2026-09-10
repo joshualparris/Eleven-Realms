@@ -15,6 +15,10 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm install
+      - run: npm run missions:validate
+      - run: npm run missions:audit
+      - run: npm run fleet:verify
       - run: npm test
       - run: npm run typecheck
+      - run: npm run smoke
       - run: npm run build

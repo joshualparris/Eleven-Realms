@@ -5,155 +5,297 @@
   "summary": {
     "mission_count": 11,
     "collision_count": 0,
-    "unimplemented_dependency_count": 0,
-    "baseline_commit_green": true,
+    "dependency_issue_count": 0,
+    "review_pairs_count": 11,
     "dispatch_ready_from_project_side": true
   },
   "missions": [
     {
       "id": "ER-001",
       "title": "Core contracts",
-      "owned_paths": ["src/core"],
-      "readable_paths": ["src"],
-      "forbidden_paths": ["src/main.ts"],
+      "worker_slot": "worker-01",
+      "owned_paths": [
+        "src/core"
+      ],
+      "readable_paths": [
+        "src"
+      ],
+      "forbidden_paths": [
+        "src/main.ts"
+      ],
       "dependencies": [],
-      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts", "src/core/rng.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "acceptance": [
+        "src/core contracts import cleanly",
+        "rng is deterministic"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-02",
+      "complexity": "medium"
     },
     {
       "id": "ER-002",
-      "title": "World grid",
-      "owned_paths": ["src/game"],
-      "readable_paths": ["src/core"],
-      "forbidden_paths": ["src/main.ts", "src/render"],
-      "dependencies": ["ER-001"],
-      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "title": "World model",
+      "worker_slot": "worker-02",
+      "owned_paths": [
+        "src/world"
+      ],
+      "readable_paths": [
+        "src/core"
+      ],
+      "forbidden_paths": [
+        "src/player",
+        "src/main.ts",
+        "src/render"
+      ],
+      "dependencies": [],
+      "acceptance": [
+        "world model loads from seed",
+        "grid dimensions are consistent"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-03",
+      "complexity": "medium"
     },
     {
       "id": "ER-003",
-      "title": "Motion and interaction",
-      "owned_paths": ["src/game"],
-      "readable_paths": ["src/core"],
-      "forbidden_paths": ["src/main.ts", "src/render"],
-      "dependencies": ["ER-001", "ER-002"],
-      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "title": "Player model",
+      "worker_slot": "worker-03",
+      "owned_paths": [
+        "src/player"
+      ],
+      "readable_paths": [
+        "src/core",
+        "src/world"
+      ],
+      "forbidden_paths": [
+        "src/world",
+        "src/main.ts",
+        "src/render"
+      ],
+      "dependencies": [],
+      "acceptance": [
+        "player movement remains clipped to the grid",
+        "state remains deterministic"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-04",
+      "complexity": "medium"
     },
     {
       "id": "ER-004",
       "title": "Canvas renderer",
-      "owned_paths": ["src/render"],
-      "readable_paths": ["src/core"],
-      "forbidden_paths": ["src/core/world.ts"],
-      "dependencies": ["ER-001"],
-      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "worker_slot": "worker-04",
+      "owned_paths": [
+        "src/render"
+      ],
+      "readable_paths": [
+        "src/core",
+        "src/world"
+      ],
+      "forbidden_paths": [
+        "src/main.ts",
+        "src/world"
+      ],
+      "dependencies": [],
+      "acceptance": [
+        "renderer can draw a grid using a world snapshot"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-05",
+      "complexity": "low"
     },
     {
       "id": "ER-005",
       "title": "UI shell",
-      "owned_paths": ["src/ui"],
-      "readable_paths": ["src/core"],
-      "forbidden_paths": ["src/main.ts", "src/render"],
-      "dependencies": ["ER-001"],
-      "shared_interfaces": ["src/core/contracts.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "worker_slot": "worker-05",
+      "owned_paths": [
+        "src/ui"
+      ],
+      "readable_paths": [
+        "src/core",
+        "src/world"
+      ],
+      "forbidden_paths": [
+        "src/main.ts",
+        "src/render",
+        "src/player"
+      ],
+      "dependencies": [],
+      "acceptance": [
+        "UI shell can read a world tick and translate it into visible text"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-06",
+      "complexity": "low"
     },
     {
       "id": "ER-006",
       "title": "Mission graph",
-      "owned_paths": ["src/mission"],
-      "readable_paths": ["src/core"],
-      "forbidden_paths": ["src/main.ts"],
-      "dependencies": ["ER-001"],
-      "shared_interfaces": ["src/core/contracts.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "worker_slot": "worker-06",
+      "owned_paths": [
+        "src/mission"
+      ],
+      "readable_paths": [
+        "src/core",
+        "src/world"
+      ],
+      "forbidden_paths": [
+        "src/main.ts",
+        "src/player",
+        "src/render"
+      ],
+      "dependencies": [],
+      "acceptance": [
+        "mission graph records state and dependency ordering"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-07",
+      "complexity": "medium"
     },
     {
       "id": "ER-007",
       "title": "Artifact log",
-      "owned_paths": ["src/evidence"],
-      "readable_paths": ["src/core"],
-      "forbidden_paths": ["src/main.ts"],
-      "dependencies": ["ER-001"],
-      "shared_interfaces": ["src/core/contracts.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "worker_slot": "worker-07",
+      "owned_paths": [
+        "src/evidence"
+      ],
+      "readable_paths": [
+        "src/core",
+        "src/mission"
+      ],
+      "forbidden_paths": [
+        "src/main.ts",
+        "src/world",
+        "src/player"
+      ],
+      "dependencies": [],
+      "acceptance": [
+        "artifact event stream can be traced from mission actions"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-08",
+      "complexity": "low"
     },
     {
       "id": "ER-008",
       "title": "Scheduler",
-      "owned_paths": ["src/control"],
-      "readable_paths": ["src/core"],
-      "forbidden_paths": ["src/main.ts"],
-      "dependencies": ["ER-001"],
-      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "worker_slot": "worker-08",
+      "owned_paths": [
+        "src/control"
+      ],
+      "readable_paths": [
+        "src/core",
+        "src/world"
+      ],
+      "forbidden_paths": [
+        "src/main.ts",
+        "src/player",
+        "src/render"
+      ],
+      "dependencies": [],
+      "acceptance": [
+        "tick scheduler produces a stable sequence"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-09",
+      "complexity": "medium"
     },
     {
       "id": "ER-009",
       "title": "Map compiler",
-      "owned_paths": ["src/compile"],
-      "readable_paths": ["src/core"],
-      "forbidden_paths": ["src/main.ts"],
-      "dependencies": ["ER-001", "ER-002"],
-      "shared_interfaces": ["src/core/contracts.ts", "src/core/world.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "worker_slot": "worker-09",
+      "owned_paths": [
+        "src/compile"
+      ],
+      "readable_paths": [
+        "src/core",
+        "src/world"
+      ],
+      "forbidden_paths": [
+        "src/main.ts",
+        "src/player",
+        "src/render"
+      ],
+      "dependencies": [],
+      "acceptance": [
+        "map compiler reads seed and emits lintable metadata"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-10",
+      "complexity": "medium"
     },
     {
       "id": "ER-010",
       "title": "Network protocol",
-      "owned_paths": ["src/net"],
-      "readable_paths": ["src/core"],
-      "forbidden_paths": ["src/main.ts"],
-      "dependencies": ["ER-001"],
-      "shared_interfaces": ["src/core/contracts.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "worker_slot": "worker-10",
+      "owned_paths": [
+        "src/net"
+      ],
+      "readable_paths": [
+        "src/core",
+        "src/world"
+      ],
+      "forbidden_paths": [
+        "src/main.ts",
+        "src/player",
+        "src/render"
+      ],
+      "dependencies": [],
+      "acceptance": [
+        "network event contract is traceable and deterministic"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-11",
+      "complexity": "medium"
     },
     {
       "id": "ER-011",
       "title": "CI gate",
-      "owned_paths": [".github/workflows"],
-      "readable_paths": ["missions"],
-      "forbidden_paths": ["src/main.ts"],
-      "dependencies": ["ER-001"],
-      "shared_interfaces": ["src/core/contracts.ts"],
-      "collision_with": [],
-      "depends_on_unimplemented_contract": false,
-      "baseline_from_main": true,
-      "acceptance_testable": true
+      "worker_slot": "worker-11",
+      "owned_paths": [
+        ".github/workflows"
+      ],
+      "readable_paths": [
+        "missions",
+        "src/core"
+      ],
+      "forbidden_paths": [
+        "src/main.ts",
+        "src/player",
+        "src/render"
+      ],
+      "dependencies": [],
+      "acceptance": [
+        "workflow remains valid and production CI remains green"
+      ],
+      "required_tests": [
+        "tests/world.test.ts"
+      ],
+      "reviewer_slot": "worker-01",
+      "complexity": "low"
     }
   ],
+  "collisions": [],
   "architecture_changes": {
     "src/core/contracts.ts": "stable shared contract surface",
     "src/core/world.ts": "authoritative state transition contract",
@@ -161,6 +303,6 @@
     "src/main.ts": "composition-only shell, no feature ownership"
   },
   "notes": [
-    "No two Round 001 missions have overlapping writable ownership paths in the baseline contract."
+    "No two Round 001 missions have overlapping writable ownership paths in the authoritative mission dataset."
   ]
 }

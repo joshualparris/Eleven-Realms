@@ -8,10 +8,12 @@
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && vite build",
     "missions:validate": "node scripts/validate-missions.js",
+    "missions:audit": "node scripts/audit-missions.js",
     "mission:check": "node scripts/mission-check.js",
     "smoke": "tsx scripts/smoke.ts",
     "fleet:verify": "node scripts/fleet-verify.js",
-    "rehearse:11": "node scripts/rehearse-11.js"
+    "rehearse:11": "node scripts/rehearse-11.js",
+    "negative:fixtures": "node scripts/negative-tests.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

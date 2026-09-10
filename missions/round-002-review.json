@@ -3,11 +3,18 @@
   "project": "Eleven-Realms",
   "mode": "evidence-review",
   "objective": "Review the implementation slice with deterministic acceptance criteria",
-  "reviewers": [
-    { "id": "reviewer-01", "role": "contract reviewer", "checks": ["src/core exports stable types", "rng is deterministic"] },
-    { "id": "reviewer-02", "role": "render reviewer", "checks": ["canvas initializes", "grid draws from world state"] },
-    { "id": "reviewer-03", "role": "test reviewer", "checks": ["unit tests verify engine state", "build remains green"] },
-    { "id": "reviewer-04", "role": "evidence reviewer", "checks": ["artifacts are produced", "logs are traceable"] }
+  "review_pairs": [
+    { "mission_id": "ER-001", "reviewer_slot": "worker-02", "acceptance_commands": ["npm run missions:validate", "npm test"] },
+    { "mission_id": "ER-002", "reviewer_slot": "worker-03", "acceptance_commands": ["npm run missions:audit", "npm run typecheck"] },
+    { "mission_id": "ER-003", "reviewer_slot": "worker-04", "acceptance_commands": ["npm run smoke", "npm test"] },
+    { "mission_id": "ER-004", "reviewer_slot": "worker-05", "acceptance_commands": ["npm run smoke", "npm run typecheck"] },
+    { "mission_id": "ER-005", "reviewer_slot": "worker-06", "acceptance_commands": ["npm run missions:validate", "npm run typecheck"] },
+    { "mission_id": "ER-006", "reviewer_slot": "worker-07", "acceptance_commands": ["npm run missions:audit", "npm test"] },
+    { "mission_id": "ER-007", "reviewer_slot": "worker-08", "acceptance_commands": ["npm run smoke", "npm run build"] },
+    { "mission_id": "ER-008", "reviewer_slot": "worker-09", "acceptance_commands": ["npm run missions:validate", "npm run smoke"] },
+    { "mission_id": "ER-009", "reviewer_slot": "worker-10", "acceptance_commands": ["npm run missions:audit", "npm run build"] },
+    { "mission_id": "ER-010", "reviewer_slot": "worker-11", "acceptance_commands": ["npm run typecheck", "npm run build"] },
+    { "mission_id": "ER-011", "reviewer_slot": "worker-01", "acceptance_commands": ["npm run missions:validate", "npm run fleet:verify"] }
   ],
   "approval": {
     "required": ["test", "typecheck", "build", "artifact-evidence"],
