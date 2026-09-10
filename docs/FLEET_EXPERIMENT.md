@@ -17,12 +17,39 @@ The repository must contain:
 - a deterministic tick and RNG scaffold,
 - a minimal playable canvas grid and UI.
 
+## Launch Gate
+
+Define `READY_FOR_DISPATCH` as requiring:
+
+Eleven-Realms:
+
+- baseline CI green
+- 11 valid independent missions
+- zero unapproved writable-path collisions
+- mission validation green
+- fleet verification green
+
+ForgeGrid:
+
+- current PR/reliability blockers closed
+- Ubuntu CI green
+- Windows CI green
+- race detector green
+- fleet worker version approved
+- bootstrap path approved
+
+Only when both sides pass may Round 001 dispatch begin.
+
 ## Metrics
 
 - Install command: `npm install`
 - Test command: `npm test`
 - Typecheck command: `npm run typecheck`
 - Build command: `npm run build`
+- Mission validation command: `npm run missions:validate`
+- Ownership check command: `npm run mission:check -- ER-004 <changed files>`
+- Smoke command: `npm run smoke`
+- Fleet verification command: `npm run fleet:verify`
 - CI badge: expected to turn green on the default branch.
 
 ## Review Theory

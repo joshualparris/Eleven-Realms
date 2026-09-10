@@ -6,7 +6,12 @@
     "dev": "vite --host 0.0.0.0",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "build": "tsc --noEmit && vite build"
+    "build": "tsc --noEmit && vite build",
+    "missions:validate": "node scripts/validate-missions.js",
+    "mission:check": "node scripts/mission-check.js",
+    "smoke": "tsx scripts/smoke.ts",
+    "fleet:verify": "node scripts/fleet-verify.js",
+    "rehearse:11": "node scripts/rehearse-11.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
@@ -15,7 +20,8 @@
     "vitest": "latest",
     "@types/node": "latest",
     "@types/jsdom": "latest",
-    "jsdom": "latest"
+    "jsdom": "latest",
+    "tsx": "latest"
   },
   "devDependencies": {}
 }

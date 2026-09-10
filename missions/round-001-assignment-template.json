@@ -1,0 +1,38 @@
+{
+  "round": "round-001",
+  "project": "Eleven-Realms",
+  "assignment_template": {
+    "slots": [
+      "worker-01",
+      "worker-02",
+      "worker-03",
+      "worker-04",
+      "worker-05",
+      "worker-06",
+      "worker-07",
+      "worker-08",
+      "worker-09",
+      "worker-10",
+      "worker-11"
+    ],
+    "physical_pool": {
+      "laptops": 10,
+      "desktop": "JPARRIS",
+      "coordinator": "AVANCE-WS7",
+      "note": "AVANCE-WS7 remains coordinator and is not counted as one of the 11 workers."
+    },
+    "mapping": {
+      "worker-01": "ER-001",
+      "worker-02": "ER-002",
+      "worker-03": "ER-003",
+      "worker-04": "ER-004",
+      "worker-05": "ER-005",
+      "worker-06": "ER-006",
+      "worker-07": "ER-007",
+      "worker-08": "ER-008",
+      "worker-09": "ER-009",
+      "worker-10": "ER-010",
+      "worker-11": "ER-011"
+    }
+  }
+}
