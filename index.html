@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eleven Realms</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">Eleven Realms</div>
+        <div class="hud">
+          <span id="seed-readout">seed: 1</span>
+          <span id="tick-readout">tick: 0</span>
+        </div>
+      </header>
+      <main class="layout">
+        <section class="game-shell">
+          <canvas id="game-canvas" width="640" height="480"></canvas>
+        </section>
+        <aside class="sidebar">
+          <section class="panel">
+            <h1>Quest</h1>
+            <p id="quest-text">Find the first gate.</p>
+          </section>
+          <section class="panel">
+            <h1>Log</h1>
+            <ul id="event-log">
+              <li>Entrance opens.</li>
+            </ul>
+          </section>
+        </aside>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

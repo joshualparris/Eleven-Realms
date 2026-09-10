@@ -1,0 +1,21 @@
+{
+  "round": "round-002-review",
+  "project": "Eleven-Realms",
+  "mode": "evidence-review",
+  "objective": "Review the implementation slice with deterministic acceptance criteria",
+  "reviewers": [
+    { "id": "reviewer-01", "role": "contract reviewer", "checks": ["src/core exports stable types", "rng is deterministic"] },
+    { "id": "reviewer-02", "role": "render reviewer", "checks": ["canvas initializes", "grid draws from world state"] },
+    { "id": "reviewer-03", "role": "test reviewer", "checks": ["unit tests verify engine state", "build remains green"] },
+    { "id": "reviewer-04", "role": "evidence reviewer", "checks": ["artifacts are produced", "logs are traceable"] }
+  ],
+  "approval": {
+    "required": ["test", "typecheck", "build", "artifact-evidence"],
+    "criteria": [
+      "All modules import from src/core contracts.",
+      "No feature bypasses the deterministic tick loop.",
+      "Canvas mount exists and initializes without runtime error.",
+      "Review evidence is attached to the associated mission artifact."
+    ]
+  }
+}

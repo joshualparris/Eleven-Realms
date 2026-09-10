@@ -1,0 +1,20 @@
+{
+  "round": "round-001",
+  "project": "Eleven-Realms",
+  "mode": "parallel",
+  "objective": "Create the first implementation slice for ForgeGrid",
+  "workers": [
+    { "id": "worker-01", "role": "core-contracts", "area": "src/core", "deliverable": "world contract and deterministic RNG" },
+    { "id": "worker-02", "role": "world-grid", "area": "src/game", "deliverable": "grid map and walkable tile model" },
+    { "id": "worker-03", "role": "entity-motion", "area": "src/game", "deliverable": "movement and carry rules" },
+    { "id": "worker-04", "role": "render-canvas", "area": "src/render", "deliverable": "canvas renderer" },
+    { "id": "worker-05", "role": "ui-shell", "area": "src/ui", "deliverable": "mission and log UI" },
+    { "id": "worker-06", "role": "mission-graph", "area": "src/mission", "deliverable": "mission state graph" },
+    { "id": "worker-07", "role": "artifact-log", "area": "src/evidence", "deliverable": "artifact trace journal" },
+    { "id": "worker-08", "role": "scheduler", "area": "src/control", "deliverable": "deterministic tick scheduler" },
+    { "id": "worker-09", "role": "map-compiler", "area": "src/compile", "deliverable": "map lint and seed compiler" },
+    { "id": "worker-10", "role": "network-protocol", "area": "src/net", "deliverable": "agent heartbeat and event contract" },
+    { "id": "worker-11", "role": "ci-gate", "area": ".github/workflows", "deliverable": "CI and acceptance evidence" }
+  ],
+  "success": "Each worker contributes a minimal, testable implementation that passes the public baseline contract."
+}

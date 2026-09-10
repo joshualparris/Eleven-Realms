@@ -1,0 +1,21 @@
+{
+  "name": "eleven-realms",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "typescript": "latest",
+    "vitest": "latest",
+    "@types/node": "latest",
+    "@types/jsdom": "latest",
+    "jsdom": "latest"
+  },
+  "devDependencies": {}
+}
