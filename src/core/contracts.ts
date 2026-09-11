@@ -23,6 +23,7 @@ export interface WorldState {
   player: PlayerState;
   entities: Entity[];
   walls: boolean[][];
+  discovered: boolean[][];
   inventory: string[];
   score: number;
   health: number;

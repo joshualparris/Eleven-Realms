@@ -24,18 +24,20 @@ export class GridCanvasRenderer implements CanvasRenderer {
 
     for (let y = 0; y < world.gridHeight; y += 1) {
       for (let x = 0; x < world.gridWidth; x += 1) {
-        if (!isVisible(x, y)) continue;
+        if (!world.discovered[y][x]) continue;
+
+        const visible = isVisible(x, y);
 
         if (world.walls[y][x]) {
-          ctx.fillStyle = '#05111c';
+          ctx.fillStyle = visible ? '#05111c' : '#02060a';
           ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-          ctx.strokeStyle = '#02070c';
+          ctx.strokeStyle = visible ? '#02070c' : '#010305';
           ctx.strokeRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
         } else {
-          const color = (x + y) % 2 === 0 ? '#102a2b' : '#0b202a';
+          const color = (x + y) % 2 === 0 ? (visible ? '#102a2b' : '#061314') : (visible ? '#0b202a' : '#040d12');
           ctx.fillStyle = color;
           ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-          ctx.strokeStyle = 'rgba(132, 217, 183, 0.08)';
+          ctx.strokeStyle = visible ? 'rgba(132, 217, 183, 0.08)' : 'rgba(132, 217, 183, 0.03)';
           ctx.strokeRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
         }
       }

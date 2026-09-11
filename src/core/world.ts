@@ -9,12 +9,15 @@ export function createWorld(seed = 1, score = 0, inventory: string[] = [], healt
   const rng = new DeterministicRng(seed);
   
   const walls: boolean[][] = [];
+  const discovered: boolean[][] = [];
   for (let y = 0; y < GRID_HEIGHT; y++) {
     walls[y] = [];
+    discovered[y] = [];
     for (let x = 0; x < GRID_WIDTH; x++) {
       const isStart = Math.abs(x - 2) <= 1 && Math.abs(y - 2) <= 1;
       const isEnd = Math.abs(x - 14) <= 1 && Math.abs(y - 10) <= 1;
       walls[y][x] = (!isStart && !isEnd && rng.int(0, 100) < 25);
+      discovered[y][x] = false;
     }
   }
 
@@ -33,7 +36,7 @@ export function createWorld(seed = 1, score = 0, inventory: string[] = [], healt
     }
   }
 
-  return {
+  const state: WorldState = {
     seed,
     tick: 0,
     width: 640,
@@ -43,6 +46,7 @@ export function createWorld(seed = 1, score = 0, inventory: string[] = [], healt
     player: { x: 2, y: 2 },
     entities,
     walls,
+    discovered,
     inventory,
     score,
     health,
@@ -52,6 +56,8 @@ export function createWorld(seed = 1, score = 0, inventory: string[] = [], healt
     gameOver: false,
     log: [`Realm ${seed} entrance opens.`],
   };
+  updateVisibility(state);
+  return state;
 }
 
 export function movePlayer(world: WorldState, direction: Direction): WorldState {
@@ -136,9 +142,22 @@ export function movePlayer(world: WorldState, direction: Direction): WorldState 
 
   world.log = newLogs.concat(world.log).slice(0, 4);
 
+  updateVisibility(world);
   return world;
 }
 
 export function stepWorld(world: WorldState, direction: Direction): WorldState {
   return movePlayer(world, direction);
+}
+
+export function updateVisibility(world: WorldState) {
+  for (let y = 0; y < world.gridHeight; y++) {
+    for (let x = 0; x < world.gridWidth; x++) {
+      const dx = x - world.player.x;
+      const dy = y - world.player.y;
+      if (Math.sqrt(dx * dx + dy * dy) <= 4.5) {
+        world.discovered[y][x] = true;
+      }
+    }
+  }
 }
