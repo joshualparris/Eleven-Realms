@@ -10,27 +10,101 @@ export class GridCanvasRenderer implements CanvasRenderer {
     }
 
     ctx.clearRect(0, 0, world.width, world.height);
-    ctx.fillStyle = '#07161c';
+    ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, world.width, world.height);
 
     const cellWidth = world.width / world.gridWidth;
     const cellHeight = world.height / world.gridHeight;
 
+    const isVisible = (tx: number, ty: number) => {
+      const dx = tx - world.player.x;
+      const dy = ty - world.player.y;
+      return Math.sqrt(dx * dx + dy * dy) <= 4.5;
+    };
+
     for (let y = 0; y < world.gridHeight; y += 1) {
       for (let x = 0; x < world.gridWidth; x += 1) {
-        const color = (x + y) % 2 === 0 ? '#102b2e' : '#0c2230';
-        ctx.fillStyle = color;
-        ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+        if (!isVisible(x, y)) continue;
+
+        if (world.walls[y][x]) {
+          ctx.fillStyle = '#05111c';
+          ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+          ctx.strokeStyle = '#02070c';
+          ctx.strokeRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+        } else {
+          const color = (x + y) % 2 === 0 ? '#102a2b' : '#0b202a';
+          ctx.fillStyle = color;
+          ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+          ctx.strokeStyle = 'rgba(132, 217, 183, 0.08)';
+          ctx.strokeRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+        }
       }
     }
 
+    ctx.shadowColor = '#78f6bc';
+    ctx.shadowBlur = 18;
     ctx.fillStyle = '#9affb8';
-    ctx.fillRect(
-      world.player.x * cellWidth + 6,
-      world.player.y * cellHeight + 6,
-      Math.max(10, cellWidth - 12),
-      Math.max(10, cellHeight - 12),
-    );
+    ctx.beginPath();
+    ctx.arc(world.player.x * cellWidth + cellWidth / 2, world.player.y * cellHeight + cellHeight / 2, Math.min(cellWidth, cellHeight) / 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    for (const entity of world.entities) {
+      if (entity.collected || !isVisible(entity.x, entity.y)) continue;
+
+      if (entity.type === 'coin') {
+        ctx.fillStyle = '#ffcc00';
+        ctx.beginPath();
+        ctx.arc(
+          entity.x * cellWidth + cellWidth / 2,
+          entity.y * cellHeight + cellHeight / 2,
+          Math.min(cellWidth, cellHeight) / 4,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+      } else if (entity.type === 'relic') {
+        ctx.fillStyle = '#b78cff';
+        ctx.strokeStyle = '#f0d8ff';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(entity.x * cellWidth + cellWidth / 2, entity.y * cellHeight + 5);
+        ctx.lineTo(entity.x * cellWidth + cellWidth - 6, entity.y * cellHeight + cellHeight / 2);
+        ctx.lineTo(entity.x * cellWidth + cellWidth / 2, entity.y * cellHeight + cellHeight - 5);
+        ctx.lineTo(entity.x * cellWidth + 6, entity.y * cellHeight + cellHeight / 2);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      } else if (entity.type === 'key') {
+        ctx.fillStyle = '#00ffff';
+        ctx.beginPath();
+        ctx.arc(entity.x * cellWidth + cellWidth / 2, entity.y * cellHeight + cellHeight / 2, Math.min(cellWidth, cellHeight) / 5, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (entity.type === 'gate') {
+        const isLocked = !world.inventory.includes('key');
+        ctx.fillStyle = isLocked ? '#ff3333' : '#ff6d9d';
+        ctx.strokeStyle = isLocked ? '#ff9999' : '#ffd1df';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(entity.x * cellWidth + 6, entity.y * cellHeight + 4, cellWidth - 12, cellHeight - 8);
+        ctx.fillRect(entity.x * cellWidth + cellWidth / 2 - 3, entity.y * cellHeight + 10, 6, cellHeight - 20);
+      } else if (entity.type === 'enemy') {
+        ctx.fillStyle = '#ff4400';
+        ctx.beginPath();
+        ctx.moveTo(entity.x * cellWidth + cellWidth / 2, entity.y * cellHeight + 4);
+        ctx.lineTo(entity.x * cellWidth + cellWidth - 4, entity.y * cellHeight + cellHeight - 4);
+        ctx.lineTo(entity.x * cellWidth + 4, entity.y * cellHeight + cellHeight - 4);
+        ctx.closePath();
+        ctx.fill();
+      } else if (entity.type === 'hazard') {
+        ctx.fillStyle = '#ff765f';
+        ctx.beginPath();
+        ctx.moveTo(entity.x * cellWidth + cellWidth / 2, entity.y * cellHeight + 5);
+        ctx.lineTo(entity.x * cellWidth + cellWidth - 6, entity.y * cellHeight + cellHeight - 6);
+        ctx.lineTo(entity.x * cellWidth + 6, entity.y * cellHeight + cellHeight - 6);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
 
     ctx.strokeStyle = '#d6ffe9';
     ctx.strokeRect(0, 0, world.width, world.height);

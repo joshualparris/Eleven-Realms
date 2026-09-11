@@ -5,6 +5,14 @@ export interface PlayerState {
   y: number;
 }
 
+export interface Entity {
+  id: string;
+  type: 'coin' | 'relic' | 'gate' | 'hazard' | 'key' | 'enemy';
+  x: number;
+  y: number;
+  collected?: boolean;
+}
+
 export interface WorldState {
   seed: number;
   tick: number;
@@ -13,6 +21,15 @@ export interface WorldState {
   gridWidth: number;
   gridHeight: number;
   player: PlayerState;
+  entities: Entity[];
+  walls: boolean[][];
+  inventory: string[];
+  score: number;
+  health: number;
+  maxHealth: number;
+  relicsFound: number;
+  questCompleted: boolean;
+  gameOver: boolean;
   log: string[];
 }
 

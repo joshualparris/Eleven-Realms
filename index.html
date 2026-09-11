@@ -8,23 +8,49 @@
   <body>
     <div id="app">
       <header class="topbar">
-        <div class="brand">Eleven Realms</div>
+        <div>
+          <div class="eyebrow">FIELD LOG // REALM 01</div>
+          <div class="brand">Eleven Realms</div>
+        </div>
         <div class="hud">
           <span id="seed-readout">seed: 1</span>
+          <span id="score-readout">score: 0</span>
           <span id="tick-readout">tick: 0</span>
         </div>
       </header>
       <main class="layout">
         <section class="game-shell">
           <canvas id="game-canvas" width="640" height="480"></canvas>
+          <div class="game-footer">
+            <span>WASD / ARROWS TO MOVE</span>
+            <span id="position-readout">X 02 / Y 02</span>
+          </div>
         </section>
         <aside class="sidebar">
           <section class="panel">
-            <h1>Quest</h1>
+            <div class="panel-kicker">ACTIVE OBJECTIVE</div>
+            <h1>Find the first gate.</h1>
             <p id="quest-text">Find the first gate.</p>
+            <div class="progress-track"><span id="relic-progress"></span></div>
+            <div class="progress-label"><span>Relics recovered</span><strong id="relic-readout">0 / 2</strong></div>
           </section>
           <section class="panel">
-            <h1>Log</h1>
+            <div class="panel-kicker">VITALS</div>
+            <div class="vitals-row"><span>Health</span><strong id="health-readout">● ● ●</strong></div>
+            <div class="vitals-row"><span>Realm condition</span><strong id="state-readout">EXPLORING</strong></div>
+          </section>
+          <section class="panel controls-panel">
+            <div class="panel-kicker">NAVIGATION</div>
+            <div class="direction-pad" aria-label="Movement controls">
+              <button class="move-button up" data-direction="north" aria-label="Move north">↑</button>
+              <button class="move-button left" data-direction="west" aria-label="Move west">←</button>
+              <button class="move-button down" data-direction="south" aria-label="Move south">↓</button>
+              <button class="move-button right" data-direction="east" aria-label="Move east">→</button>
+            </div>
+            <button id="restart-button" class="restart-button" type="button">↻ Restart realm</button>
+          </section>
+          <section class="panel log-panel">
+            <div class="panel-kicker">FIELD LOG</div>
             <ul id="event-log">
               <li>Entrance opens.</li>
             </ul>
