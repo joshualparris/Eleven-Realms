@@ -5,7 +5,7 @@ export const GRID_WIDTH = 16;
 export const GRID_HEIGHT = 12;
 export const MAX_HEALTH = 3;
 
-export function createWorld(seed = 1, score = 0, inventory: string[] = [], health = MAX_HEALTH): WorldState {
+export function createWorld(seed = 1, score = 0, inventory: string[] = [], health = MAX_HEALTH, relicsFound = 0): WorldState {
   const rng = new DeterministicRng(seed);
   
   const walls: boolean[][] = [];
@@ -26,6 +26,7 @@ export function createWorld(seed = 1, score = 0, inventory: string[] = [], healt
     { id: 'key-1', type: 'key', x: rng.int(4, 13), y: rng.int(4, 9), collected: false },
     { id: 'enemy-1', type: 'enemy', x: rng.int(8, 15), y: rng.int(0, 5), collected: false },
     { id: 'enemy-2', type: 'enemy', x: rng.int(0, 8), y: rng.int(6, 11), collected: false },
+    { id: 'relic-1', type: 'relic', x: rng.int(1, 14), y: rng.int(1, 10), collected: false },
   ];
   
   for (let i = 0; i < 6; i++) {
@@ -51,8 +52,8 @@ export function createWorld(seed = 1, score = 0, inventory: string[] = [], healt
     score,
     health,
     maxHealth: MAX_HEALTH,
-    relicsFound: 0,
-    questCompleted: false,
+    relicsFound,
+    questCompleted: relicsFound >= 2,
     gameOver: false,
     log: [`Realm ${seed} entrance opens.`],
   };
@@ -105,10 +106,18 @@ export function movePlayer(world: WorldState, direction: Direction): WorldState 
         entity.collected = true;
         world.inventory.push('key');
         newLogs.unshift('You found a Key! The gate is unlocked.');
+      } else if (entity.type === 'relic') {
+        entity.collected = true;
+        world.relicsFound += 1;
+        world.score += 50;
+        newLogs.unshift('You recovered a Relic!');
+        if (world.relicsFound >= 2) {
+          world.questCompleted = true;
+        }
       } else if (entity.type === 'gate') {
         newLogs.unshift('You passed through the gate!');
         // Generate new level and return entirely new world state!
-        return createWorld(world.seed + 1, world.score, [], world.health);
+        return createWorld(world.seed + 1, world.score, [], world.health, world.relicsFound);
       }
     }
   }
