@@ -41,7 +41,7 @@ function render(): void {
   if (relicReadout) relicReadout.textContent = `${world.relicsFound} / 2`;
   if (relicProgress) relicProgress.style.width = `${(world.relicsFound / 2) * 100}%`;
   if (stateReadout) {
-    stateReadout.textContent = world.questCompleted ? 'GATE OPEN' : world.gameOver ? 'LOST' : 'EXPLORING';
+    stateReadout.textContent = world.questCompleted ? 'VICTORY' : world.gameOver ? 'LOST' : 'EXPLORING';
     stateReadout.dataset.state = world.questCompleted ? 'complete' : world.gameOver ? 'danger' : 'active';
   }
   if (eventLog) {
